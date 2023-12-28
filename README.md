@@ -47,7 +47,7 @@ As part of the ETL process, I employed SSIS to extract data from the source, app
    - Debugged the ETL process, meticulously validating each step. Ensured the integrity of records by cross-verifying source table records with the transformed data.
 
 4. **Implementing Slowly Changing Dimensions:**
-   - Leveraged expertise in Slowly Changing Dimensions (SCD) to implement both Type 1 and Type 2 changes. Managed updates and historical tracking within SSIS.
+   - Implemented Slowly Changing Dimensions (SCD) Type 1 and Type 2 changes. Managed updates and historical tracking within SSIS.
 
 5. **Loading Transformed Data:**
    - Loaded the transformed data into the Destination Data Warehouse, conducting further debugging and testing to guarantee accuracy and completeness.
