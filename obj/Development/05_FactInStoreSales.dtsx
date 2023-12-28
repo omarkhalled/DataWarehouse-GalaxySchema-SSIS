@@ -1,0 +1,2597 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/26/2023 9:22:02 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OMARKHALED"
+  DTS:CreatorName="OMARKHALED\omer"
+  DTS:DTSID="{CBB6E727-EDA6-4A97-ABC7-692BB0A76D38}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="05_FactInStoreSales"
+  DTS:PackageType="5"
+  DTS:VersionBuild="23"
+  DTS:VersionGUID="{FD05ADB5-6911-448C-9C96-0D84F2DEAE5E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6614D289-CFB2-4487-9E0F-70A28EE0BFF5}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Variable">
+      <DTS:VariableValue
+        DTS:DataType="7">1/1/2088</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DTF"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2D21FD79-36B2-4DE1-9648-5CBAFF459B5C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DTF"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DTF\Derived Column - Calculations"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column - Calculations"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input].Columns[UnitPrice]"
+                      cachedDataType="cy"
+                      cachedName="UnitPrice"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input].Columns[StandardCost]"
+                      cachedDataType="cy"
+                      cachedName="StandardCost"
+                      lineageId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output].Columns[StandardCost]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedSales]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedSales]"
+                      name="ExtendedSales"
+                      precision="25"
+                      scale="4"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_CY)#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]} * #{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_CY)UnitPrice * OrderQty</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedCost]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedCost]"
+                      name="ExtendedCost"
+                      precision="25"
+                      scale="4"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_CY)#{Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output].Columns[StandardCost]} * #{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_CY)StandardCost * OrderQty</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Derived Column - Replace nulls"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column - Replace nulls"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]}) ? 0 : #{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(ProductKey) ? 0 : ProductKey</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]}) ? 0 : #{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(CustomerKey) ? 0 : CustomerKey</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]}) ? 0 : #{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(TerritoryKey) ? 0 : TerritoryKey</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[OrderDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="OrderDateKeyint"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]}) ? 0 : #{Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(OrderDateKeyint) ? 0 : OrderDateKeyint</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[ShipDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="ShipDateKeyint"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]}) ? 0 : #{Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(ShipDateKeyint) ? 0 : ShipDateKeyint</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input].Columns[DueDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="DueDateKeyint"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[ISNULL](#{Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]}) ? 0 : #{Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">ISNULL(DueDateKeyint) ? 0 : DueDateKeyint</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - CustomerKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - CustomerKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT        CustomerKey, CustomerAlternateKey
+FROM            CustomerDim
+WHERE        (Status = 'Current')
+ORDER BY CustomerKey</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT        CustomerKey, CustomerAlternateKey
+FROM            CustomerDim
+WHERE        (Status = 'Current')
+ORDER BY CustomerKey) [refTable]
+where [refTable].[CustomerAlternateKey] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="CustomerKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CustomerAlternateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - CustomerKey.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input].Columns[CustomerKey]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      name="CustomerKey"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">CustomerAlternateKey</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">CustomerKey</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - DueDateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - DueDateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DateKey]
+      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT [DateKey]
+      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]) [refTable]
+where [refTable].[FullDate] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[DueDate]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - DueDateKey.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input].Columns[DueDate]"
+                      cachedDataType="dbDate"
+                      cachedName="DueDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[DueDate]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">FullDate</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]"
+                      name="DueDateKeyint"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DateKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - OrderDateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - OrderDateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT [DateKey]
+      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT [DateKey]
+      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]) [refTable]
+where [refTable].[FullDate] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - OrderDateKey.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input].Columns[OrderDate]"
+                      cachedDataType="dbDate"
+                      cachedName="OrderDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">FullDate</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]"
+                      name="OrderDateKeyint"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DateKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - ProductKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - ProductKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  [ProductKey]
+      ,[ProductAlternateKey]
+   
+      ,[StandardCost]
+    
+  FROM [DW_AdventureWorks].[dbo].[ProductDim]
+  where Status = 'Current'</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT  [ProductKey]
+      ,[ProductAlternateKey]
+   
+      ,[StandardCost]
+    
+  FROM [DW_AdventureWorks].[dbo].[ProductDim]
+  where Status = 'Current') [refTable]
+where [refTable].[ProductAlternateKey] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ProductKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="ProductAlternateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="StandardCost" dataType="DT_CY" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - ProductKey.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input].Columns[ProductKey]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductKey"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">ProductAlternateKey</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">ProductKey</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output].Columns[StandardCost]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output].Columns[StandardCost]"
+                      name="StandardCost"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">StandardCost</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - ShipDateKey"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - ShipDateKey"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT  [DateKey]      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT  [DateKey]      ,[FullDate]
+     
+  FROM [DW_AdventureWorks].[dbo].[DateDim]) [refTable]
+where [refTable].[FullDate] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DateKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FullDate" dataType="DT_DBDATE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - ShipDateKey.Connections[OleDbConnection]"
+                  connectionManagerID="{E1A1D218-97FD-4D34-8DFC-0420E0547DE1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.AdventureWorks2019]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input].Columns[ShipDate]"
+                      cachedDataType="dbDate"
+                      cachedName="ShipDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">FullDate</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]"
+                      name="ShipDateKeyint"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">DateKey</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\Lookup - Territory"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup - Territory"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT        TerritoryKey, TerritoryID
+FROM            TerritoryDim
+WHERE        (Status = 'Current')</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT        TerritoryKey, TerritoryID
+FROM            TerritoryDim
+WHERE        (Status = 'Current')) [refTable]
+where [refTable].[TerritoryID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TerritoryKey" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="TerritoryID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\Lookup - Territory.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\Lookup - Territory.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\Lookup - Territory.Inputs[Lookup Input].Columns[TerritoryKey]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      name="TerritoryKey"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">TerritoryID</property>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">TerritoryKey</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\Lookup - Territory.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DTF\Lookup - Territory.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - Territory.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DTF\Lookup - Territory.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DTF\Lookup - Territory.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DTF\Lookup - Territory.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\Lookup - Territory.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - Territory.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\Lookup - Territory.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\Lookup - Territory.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\OLE DB Destination - Loading"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination - Loading"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[FactInStoreSales]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\OLE DB Destination - Loading.Connections[OleDbConnection]"
+                  connectionManagerID="{443738BC-72C7-4431-B733-C61E957CBD33}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.DW_AdventureWorks]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[SalesOrderID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderID"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderId]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderID]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                      cachedDataType="i4"
+                      cachedName="ProductID"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[UnitPrice]"
+                      cachedDataType="cy"
+                      cachedName="UnitPrice"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[UnitPrice]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[CustomerID]"
+                      cachedDataType="i4"
+                      cachedName="CustomerID"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[TerritoryID]"
+                      cachedDataType="i4"
+                      cachedName="TerritoryID"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[TerritoryKey]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[Freight]"
+                      cachedDataType="cy"
+                      cachedName="Freight"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[Freight]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[Freight]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[ExtendedSales]"
+                      cachedDataType="numeric"
+                      cachedName="ExtendedSales"
+                      cachedPrecision="25"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ExtendedSales]"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedSales]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[OrderDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="OrderDateKeyint"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                      lineageId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output].Columns[OrderDateKeyint]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[DueDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="DueDateKeyint"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[DueDateKey]"
+                      lineageId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output].Columns[DueDateKeyint]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[ShipDateKeyint]"
+                      cachedDataType="i4"
+                      cachedName="ShipDateKeyint"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                      lineageId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output].Columns[ShipDateKeyint]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[SalesOrderDetailID]"
+                      cachedDataType="i4"
+                      cachedName="SalesOrderDetailID"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderLineNumber]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[OrderQty]"
+                      cachedDataType="i2"
+                      cachedName="OrderQty"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[StandardCost]"
+                      cachedDataType="cy"
+                      cachedName="StandardCost"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[UnitCost]"
+                      lineageId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output].Columns[StandardCost]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[TaxAmt]"
+                      cachedDataType="cy"
+                      cachedName="TaxAmt"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[TaxAmount]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TaxAmt]" />
+                    <inputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].Columns[ExtendedCost]"
+                      cachedDataType="numeric"
+                      cachedName="ExtendedCost"
+                      cachedPrecision="25"
+                      cachedScale="4"
+                      externalMetadataColumnId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ExtenedCost]"
+                      lineageId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output].Columns[ExtendedCost]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                      dataType="i4"
+                      name="ProductKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                      dataType="i4"
+                      name="CustomerKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[TerritoryKey]"
+                      dataType="i4"
+                      name="TerritoryKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                      dataType="i4"
+                      name="OrderDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[DueDateKey]"
+                      dataType="i4"
+                      name="DueDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                      dataType="i4"
+                      name="ShipDateKey" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderId]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="SalesOrderId" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderLineNumber]"
+                      dataType="i4"
+                      name="SalesOrderLineNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                      dataType="i4"
+                      name="Quantity" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[UnitCost]"
+                      dataType="cy"
+                      name="UnitCost" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[TaxAmount]"
+                      dataType="cy"
+                      name="TaxAmount" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ExtendedSales]"
+                      dataType="cy"
+                      name="ExtendedSales" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[ExtenedCost]"
+                      dataType="cy"
+                      name="ExtenedCost" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input].ExternalColumns[CreatedAt]"
+                      dataType="dbTimeStamp"
+                      name="CreatedAt" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DTF\OLE DB Destination - Loading.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Destination - Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Destination - Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Destination - Loading.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DTF\OLE DB Source - GetOnlineSalesData"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source - GetOnlineSalesData"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT        Sales.SalesOrderDetail.SalesOrderID, Sales.SalesOrderDetail.SalesOrderDetailID, Sales.SalesOrderDetail.OrderQty, Sales.SalesOrderDetail.ProductID, Sales.SalesOrderDetail.UnitPrice, 
+                         Sales.SalesOrderDetail.UnitPriceDiscount, Sales.SalesOrderDetail.LineTotal, Sales.SalesOrderHeader.SalesOrderNumber, CONVERT(date, Sales.SalesOrderHeader.OrderDate) AS OrderDate, CONVERT(date, 
+                         Sales.SalesOrderHeader.ShipDate) AS ShipDate, CONVERT(date, Sales.SalesOrderHeader.DueDate) AS DueDate, Sales.SalesOrderHeader.CustomerID, Sales.SalesOrderHeader.TerritoryID, Sales.SalesOrderHeader.TaxAmt, 
+                         Sales.SalesOrderHeader.Freight
+FROM            Sales.SalesOrderHeader INNER JOIN
+                         Sales.SalesOrderDetail ON Sales.SalesOrderDetail.SalesOrderID = Sales.SalesOrderHeader.SalesOrderID
+WHERE        (Sales.SalesOrderHeader.OnlineOrderFlag = 0)
+and 
+Sales.SalesOrderHeader.[ModifiedDate] &gt;=?
+and
+Sales.SalesOrderHeader.[ModifiedDate] &lt;?
+ORDER BY Sales.SalesOrderDetail.SalesOrderID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping">"Parameter0:Input",{6614D289-CFB2-4487-9E0F-70A28EE0BFF5};"Parameter1:Input",System::StartTime;</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Connections[OleDbConnection]"
+                  connectionManagerID="{E1A1D218-97FD-4D34-8DFC-0420E0547DE1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.AdventureWorks2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      name="OrderQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      length="25"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      name="ShipDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[DueDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[DueDate]"
+                      name="DueDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      name="TerritoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TaxAmt]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[TaxAmt]"
+                      name="TaxAmt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[Freight]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].Columns[Freight]"
+                      name="Freight"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      dataType="i4"
+                      name="SalesOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      dataType="i4"
+                      name="SalesOrderDetailID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      dataType="i2"
+                      name="OrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      dataType="cy"
+                      name="UnitPriceDiscount" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      dataType="numeric"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      dataType="dbDate"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      dataType="dbDate"
+                      name="ShipDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      dataType="dbDate"
+                      name="DueDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      dataType="i4"
+                      name="TerritoryID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      dataType="cy"
+                      name="TaxAmt" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      name="SalesOrderID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      name="OrderQty" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      name="UnitPrice" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      name="ShipDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[DueDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[DueDate]"
+                      name="DueDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      name="TerritoryID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[TaxAmt]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[TaxAmt]"
+                      name="TaxAmt" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[Freight]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[Freight]"
+                      name="Freight" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DTF.Paths[Derived Column Output]"
+              endId="Package\DTF\Derived Column - Calculations.Inputs[Derived Column Input]"
+              name="Derived Column Output"
+              startId="Package\DTF\Derived Column - Replace nulls.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DTF.Paths[Derived Column Output1]"
+              endId="Package\DTF\OLE DB Destination - Loading.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DTF\Derived Column - Calculations.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output]"
+              endId="Package\DTF\Lookup - ProductKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - CustomerKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output1]"
+              endId="Package\DTF\Lookup - Territory.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - ProductKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output2]"
+              endId="Package\DTF\Lookup - OrderDateKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - Territory.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output3]"
+              endId="Package\DTF\Lookup - ShipDateKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - OrderDateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output4]"
+              endId="Package\DTF\Lookup - DueDateKey.Inputs[Lookup Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - ShipDateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[Lookup Match Output5]"
+              endId="Package\DTF\Derived Column - Replace nulls.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\DTF\Lookup - DueDateKey.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\DTF.Paths[OLE DB Source Output]"
+              endId="Package\DTF\Lookup - CustomerKey.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\DTF\OLE DB Source - GetOnlineSalesData.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Get Last Load Date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E36C4496-7154-4881-A4E7-A50B200E55E6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Get Last Load Date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{443738BC-72C7-4431-B733-C61E957CBD33}"
+          SQLTask:SqlStatementSource="SELECT        LastLoadDate&#xA;FROM            MetaControlData"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="LastLoadDate"
+            SQLTask:DtsVariableName="User::Variable" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update last date"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BFEAD2E9-8A0F-410C-AD40-835E3BF0C441}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update last date"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{443738BC-72C7-4431-B733-C61E957CBD33}"
+          SQLTask:SqlStatementSource="&#xA;update [DW_AdventureWorks].[dbo].[MetaControlData]&#xA;SET [LastLoadDate] = ?" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="System::StartTime"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="7"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{40762C3A-FBDC-48CD-BBA0-A950D150754E}"
+      DTS:From="Package\Get Last Load Date"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\DTF" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{D9F30361-2CBE-450F-8958-7E41AFA2D44B}"
+      DTS:From="Package\DTF"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Update last date" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="98,42"
+          Id="Package\DTF"
+          TopLeft="319,102" />
+        <NodeLayout
+          Size="169,42"
+          Id="Package\Get Last Load Date"
+          TopLeft="283,26" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Update last date"
+          TopLeft="281,179" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="367.75,68">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34"
+              Start="0,0"
+              End="0,26.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,26.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="368,144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9,35"
+              Start="0,0"
+              End="-9,27.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.5"
+                    Point2="0,17.5"
+                    Point3="-4,17.5" />
+                  <mssgle:LineSegment
+                    End="-5,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5,17.5"
+                    Point2="-9,17.5"
+                    Point3="-9,21.5" />
+                  <mssgle:LineSegment
+                    End="-9,27.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DTF">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="253,42"
+          Id="Package\DTF\OLE DB Source - GetOnlineSalesData"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="182,42"
+          Id="Package\DTF\Lookup - DueDateKey"
+          TopLeft="41.0000000000001,617.5" />
+        <NodeLayout
+          Size="177,42"
+          Id="Package\DTF\Lookup - ProductKey"
+          TopLeft="43.5,209.5" />
+        <NodeLayout
+          Size="164,42"
+          Id="Package\DTF\Lookup - Territory"
+          TopLeft="50,311.5" />
+        <NodeLayout
+          Size="218,42"
+          Id="Package\DTF\OLE DB Destination - Loading"
+          TopLeft="42,839" />
+        <NodeLayout
+          Size="186,42"
+          Id="Package\DTF\Lookup - CustomerKey"
+          TopLeft="39,107.5" />
+        <NodeLayout
+          Size="190,42"
+          Id="Package\DTF\Lookup - OrderDateKey"
+          TopLeft="37.0000000000001,413.5" />
+        <NodeLayout
+          Size="183,42"
+          Id="Package\DTF\Lookup - ShipDateKey"
+          TopLeft="40.5000000000001,515.5" />
+        <NodeLayout
+          Size="220,42"
+          Id="Package\DTF\Derived Column - Calculations"
+          TopLeft="52,770" />
+        <NodeLayout
+          Size="226,42"
+          Id="Package\DTF\Derived Column - Replace nulls"
+          TopLeft="18,696" />
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output5]"
+          TopLeft="131.5,659.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.5"
+              Start="0,0"
+              End="0,29">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,8.6953125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output4]"
+          TopLeft="132,557.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output3]"
+          TopLeft="132,455.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output2]"
+          TopLeft="132,353.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output1]"
+          TopLeft="132,251.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Lookup Match Output]"
+          TopLeft="132,149.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-48.19138671875,20.4453125,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Derived Column Output1]"
+          TopLeft="162,812">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-11,27"
+              Start="0,0"
+              End="-11,19.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,9.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,9.5"
+                    Point2="0,13.5"
+                    Point3="-4,13.5" />
+                  <mssgle:LineSegment
+                    End="-7,13.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-7,13.5"
+                    Point2="-11,13.5"
+                    Point3="-11,17.5" />
+                  <mssgle:LineSegment
+                    End="-11,19.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[Derived Column Output]"
+          TopLeft="131,738">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="31,32"
+              Start="0,0"
+              End="31,24.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12"
+                    Point2="0,16"
+                    Point3="4,16" />
+                  <mssgle:LineSegment
+                    End="27,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27,16"
+                    Point2="31,16"
+                    Point3="31,20" />
+                  <mssgle:LineSegment
+                    End="31,24.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DTF.Paths[OLE DB Source Output]"
+          TopLeft="132,47.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\OLE DB Source - GetOnlineSalesData">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - DueDateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - ProductKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - Territory">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\OLE DB Destination - Loading">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - CustomerKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:boolean">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:int">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - OrderDateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\Lookup - ShipDateKey">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

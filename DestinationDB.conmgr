@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="LocalHost.DW_AdventureWorks"
+  DTS:DTSID="{443738BC-72C7-4431-B733-C61E957CBD33}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=.;Initial Catalog=DW_AdventureWorks;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-AdventureWorks ODS To Dimensional Model OLAP-{443738BC-72C7-4431-B733-C61E957CBD33}LocalHost.DW_AdventureWorks;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

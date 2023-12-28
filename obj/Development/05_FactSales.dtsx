@@ -1,0 +1,485 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/26/2023 9:22:02 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OMARKHALED"
+  DTS:CreatorName="OMARKHALED\omer"
+  DTS:DTSID="{A982B75A-2B6A-4123-B198-0430B7EB5FFA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{203656A3-D0D7-426F-B061-9D1BF1E26AFA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DTF"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{32E9E7C6-FF2C-49B6-9865-00AEE2140EEA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DTF"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DTF\OLE DB Source - GetSalesData"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source - GetSalesData"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+	[AdventureWorks2019].[Sales].[SalesOrderDetail].SalesOrderID,
+	SalesOrderDetailID,
+	OrderQty,
+	ProductID,
+	UnitPrice,
+	UnitPriceDiscount,
+	LineTotal,
+	SalesOrderNumber,
+	CONVERT(date, [AdventureWorks2019].[Sales].[SalesOrderHeader].OrderDate) AS OrderDate,
+	CONVERT(date, [AdventureWorks2019].[Sales].[SalesOrderHeader].ShipDate) AS ShipDate,
+	CONVERT(date, [AdventureWorks2019].[Sales].[SalesOrderHeader].DueDate) AS DueDate,
+	CustomerID,
+	TerritoryID,
+	TaxAmt,
+	Freight,
+	OnlineOrderFlag
+FROM [AdventureWorks2019].[Sales].[SalesOrderHeader]
+ join [AdventureWorks2019].[Sales].[SalesOrderDetail] 
+ on [AdventureWorks2019].[Sales].[SalesOrderDetail].SalesOrderID = [AdventureWorks2019].[Sales].[SalesOrderHeader].SalesOrderID
+where OnlineOrderFlag =1
+ORDER BY 1</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DTF\OLE DB Source - GetSalesData.Connections[OleDbConnection]"
+                  connectionManagerID="{E1A1D218-97FD-4D34-8DFC-0420E0547DE1}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[LocalHost.AdventureWorks2019]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                      name="SalesOrderID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                      name="OrderQty"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[ProductID]"
+                      name="ProductID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                      name="UnitPrice"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      length="25"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OrderDate]"
+                      name="OrderDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[ShipDate]"
+                      name="ShipDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[DueDate]"
+                      dataType="dbDate"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[DueDate]"
+                      name="DueDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                      name="CustomerID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[TerritoryID]"
+                      name="TerritoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[TaxAmt]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[TaxAmt]"
+                      name="TaxAmt"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[Freight]"
+                      dataType="cy"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[Freight]"
+                      name="Freight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OnlineOrderFlag]"
+                      dataType="bool"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OnlineOrderFlag]"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].Columns[OnlineOrderFlag]"
+                      name="OnlineOrderFlag"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                      dataType="i4"
+                      name="SalesOrderID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                      dataType="i4"
+                      name="SalesOrderDetailID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                      dataType="i2"
+                      name="OrderQty" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                      dataType="i4"
+                      name="ProductID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                      dataType="cy"
+                      name="UnitPrice" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                      dataType="cy"
+                      name="UnitPriceDiscount" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[LineTotal]"
+                      dataType="numeric"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      name="SalesOrderNumber" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OrderDate]"
+                      dataType="dbDate"
+                      name="OrderDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[ShipDate]"
+                      dataType="dbDate"
+                      name="ShipDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[DueDate]"
+                      dataType="dbDate"
+                      name="DueDate" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                      dataType="i4"
+                      name="CustomerID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[TerritoryID]"
+                      dataType="i4"
+                      name="TerritoryID" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[TaxAmt]"
+                      dataType="cy"
+                      name="TaxAmt" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[Freight]"
+                      dataType="cy"
+                      name="Freight" />
+                    <externalMetadataColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Output].ExternalColumns[OnlineOrderFlag]"
+                      dataType="bool"
+                      name="OnlineOrderFlag" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                      name="SalesOrderID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                      name="SalesOrderDetailID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      dataType="i2"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                      name="OrderQty" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                      name="ProductID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                      name="UnitPrice" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                      name="UnitPriceDiscount" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      dataType="numeric"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[LineTotal]"
+                      name="LineTotal"
+                      precision="38"
+                      scale="6" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderNumber]"
+                      dataType="wstr"
+                      length="25"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[SalesOrderNumber]"
+                      name="SalesOrderNumber" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OrderDate]"
+                      name="OrderDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ShipDate]"
+                      name="ShipDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[DueDate]"
+                      dataType="dbDate"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[DueDate]"
+                      name="DueDate" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                      name="CustomerID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[TerritoryID]"
+                      name="TerritoryID" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[TaxAmt]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[TaxAmt]"
+                      name="TaxAmt" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[Freight]"
+                      dataType="cy"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[Freight]"
+                      name="Freight" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OnlineOrderFlag]"
+                      dataType="bool"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[OnlineOrderFlag]"
+                      name="OnlineOrderFlag" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DTF\OLE DB Source - GetSalesData.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="98,42"
+          Id="Package\DTF"
+          TopLeft="319,89" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DTF">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="223,42"
+          Id="Package\DTF\OLE DB Source - GetSalesData"
+          TopLeft="283,43" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DTF\OLE DB Source - GetSalesData">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
